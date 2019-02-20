@@ -1,0 +1,29 @@
+<layout name="public/layout"/>
+
+<div class="w1000 ClearFix margin_top20">
+			<!--左侧end-->
+			<?php $curr_page = 'usertui'?>
+			<include file="public/member_left"/>
+			<!--左侧end-->
+			<div class="ur_right">
+				<!--uer_top-->
+				<include file = "public/member_top"/>
+				<div class="ur_location">
+					<a href="">我的快乐购</a>
+					<span>&gt;</span>
+					<a class="a_cur">申请退款</a>
+				</div>
+				<!--uer_top-->
+				<div class="application_tips">
+                    <b></b>温馨提示：参加满减优惠活动的订单，满减优惠金额按比例（商品单价/订单金额）分摊到每个商品上；使用优惠券的订单如产生退货，优惠券均不退回；退货金额以小计为准。原有积分在退货成功之后会返回到积分账户中，可继续使用！
+                </div>
+                <div class="order_tab">
+                    <ul class="order_tab_ul">
+                        <li class="on"><a href="?act=member_return&amp;op=index&amp;type=0">申请退货</a></li>
+                        <li class=""><a href="?act=member_return&amp;op=index&amp;type=1">申请退货记录</a></li>
+                    </ul>
+                </div>
+                <div class="my_f_list"></div>
+                <div class="no_data"><img src="__PUBLIC__/Home/image/no_data.png"><span>没有任何数据!</span></div>
+			</div>
+		</div>

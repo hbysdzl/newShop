@@ -1,0 +1,196 @@
+﻿<!doctype html>
+<html lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>{$page_title}</title>
+<meta name="keywords" content="{$page_keywords}" />
+<meta name="description" content="{$page_description}" />
+
+<script src="__PUBLIC__/Home/gjs/tingyun-rum.js"></script>
+<script src="__PUBLIC__/Home/gjs/jquery-1.7.2.min.js"></script>
+<script src="__PUBLIC__/Home/gjs/placeholderfriend.js"></script>
+<link href="__PUBLIC__/Home/gcss/header.css" rel="stylesheet" />
+<link href="__PUBLIC__/Home/gcss/footer.css" rel="stylesheet" />
+<script src="__PUBLIC__/Home/gjs/dialog.min.js" id="dialog_js" charset="utf-8"></script>
+<script src="__PUBLIC__/Home/js/jquery.form.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/Home/js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/Home/js/gt.js"></script>
+</head>
+<body>
+<div id="append_parent"></div>
+<!-- 头部 start-->
+<div class="full_sc">
+    <div class="w1000 header_center ClearFix">
+        <div class="h_c_logo">
+            <a href="{:U('Index/index')}">
+                <img src="__PUBLIC__/Home/picture/logo.jpg" /></a>
+        </div>
+        <div class="h_c_right">
+            <img src="__PUBLIC__/Home/picture/top_center.jpg" />
+        </div>
+    </div>
+</div><!-- 头部 end--><link href="__PUBLIC__/Home/gcss/login.css" rel="stylesheet" />
+<div class="w980">
+    <div class="login_box ClearFix">
+        <div class="logn_b_l ClearFix"><img style='width:560px;height:360px' border='0' src='__PUBLIC__/Home/picture/05657833806768851.jpg' alt='288'/></div>
+        <div class="logn_b_r ClearFix">
+            <div class="lognul">
+                <div class="login_h2 ClearFix">
+                    <h2 style="color:#F11D20">登录放心购</h2>
+                    <div class="lognrtop">还没有放心购账号<a href="{:U('regist')}">快速注册</a>
+                    </div>
+                </div>
+                <div class="radio_box">
+                    <span class="s_radio">
+                    <input type="radio" id="radio1" name="r1" value="1" checked="">
+                        <label for="radio1" class="r_txt">快捷登录</label>
+                    </span>
+                    <span class="s_radio">
+                    <input type="radio" id="radio2" name="r1" value="0">
+                        <label for="radio2" class="r_txt">普通密码登录</label>
+                    </span>
+                </div>
+                <input type="hidden" value="" name="ref_url" id="ref_url">
+<div class="mc">
+    <div class="form">
+        <form id="login_sms_form" method="post" action="">
+            <div class="item item1">
+                <input type="text" maxlength="11" placeholder="请输入手机号码" class="itxt onfocustxt" name="tel" id="sms_mobile">
+                <div class="err_box">
+                    <div class="err_msg err_msg1" style="display: none;" id="error_sms_mobile"></div>
+                </div>
+            </div>
+            <div class="item item2">
+                <input class="itxt itxt_yzm onfocustxt" maxlength="6" type="text" placeholder="请输入短信验证码" name="sms_code" id="sms_code">
+                <a href="javascript:void(0);" id="send_mobile_code" class="ncm-btn ml5 sms_code" tabindex="2">
+                    <div id="hide_times" onclick="seedcode(this,'#sms_mobile');" >获取验证码</div>
+                </a>
+                <div class="err_box">
+                    <div class="err_msg err_msg1" style="display: none;" id="error_sms_code"></div>
+                </div>
+            </div>
+            <div class="item item5">
+                <div class="login-btn">
+                    <button type="submit" style="background: #F11D20;width: 317px;height: 40px;border: none;color: #fff;cursor: pointer;" >立即登录</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="coagent">
+        <h5>您可以使用以下账号登录</h5>
+        <ul>
+            <li>
+                <a class="hz_xl" href="javascript:void(0)" title="QQ" onclick='toQzoneLogin()' >QQ</a>
+            </li>
+            <li>
+                <a class="hz_qq" href="http://www.happigo.com/shop/api.php?act=tosina" title="新浪微博">新浪微博</a>
+            </li>
+            <li>
+                <a class="hz_zfb" href="http://www.happigo.com/shop/api.php?act=zfb" title="支付宝">支付宝</a>
+            </li>                                                    
+        </ul>
+    </div>
+</div>
+<div class="mc" style="display: none;">
+<div class="form">
+    <form id="login_form" method="post" action="" class="bg">
+      
+        <div class="item item1">
+            <input type="text" placeholder="已验证邮箱" name="email" class="itxt onfocustxt" id="user_name" tabindex="1"> 
+        </div>
+        <div class="item item2">
+            <input class="itxt" type="password" placeholder="请输入密码" autocomplete="off" tabindex="2" id="password" name="password" >
+        </div>
+        <div class="item item3">
+            <div id="embed-captcha"></div>
+            <p id="wait" class="show">正在加载验证码......</p>
+            <p id="notice" class="hide">请先完成验证</p>  
+        </div>
+        
+        <div class="item item4">
+            <div class="safe ClearFix">
+                <span>
+                    <input type="checkbox" tabindex="4" class="jdcheckbox" name="autoLogin" id="autoLogin" checked="checked">
+                    <label for="autoLogin">记住用户名</label>
+                </span>
+                <span class="forget-pw-safe">
+                    <a target="_blank" class="" href="#">忘记密码？</a>
+                </span>
+            </div>
+        </div>
+        <div class="item item5">
+            <div class="login-btn">
+            <button type="submit" style="background: #F11D20;width: 317px;height: 40px;border: none;color: #fff;cursor: pointer;" >立即登录</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="coagent">
+    <h5>您可以使用以下账号登录</h5>
+    <ul>
+        <li>
+            <a class="hz_xl" href="javascript:void(0)" title="QQ" onclick='toQzoneLogin()' >QQ</a>
+        </li>
+        <li>
+            <a class="hz_qq" href="http://www.happigo.com/shop/api.php?act=tosina" title="新浪微博">新浪微博</a>
+        </li>
+        <li>
+            <a class="hz_zfb" href="http://www.happigo.com/shop/api.php?act=zfb" title="支付宝">支付宝</a>
+        </li>
+    </ul>
+ </div>
+</div>
+ </div>
+</div>
+    </div>
+</div>
+<div class="login_r_fixed">
+    <a href="javascript:void(0)"><img src="__PUBLIC__/Home/picture/login_r1.png">
+    <em></em>
+    <img class="login_ewm" src="__PUBLIC__/Home/picture/down_app_ewm.png">
+    </a>
+</div>
+
+<!--底部-->
+<div class="footer Clearfix">
+    <div class="footer_bottom">
+        <div class="w1200">
+            <p>
+                <span class="font_arial">Copyright© 2006-2016 happigo. All Rights Reserved </span>
+                免费服务热线: 400-705-1111 | 固话也可拨打: 400-705-8800
+                <span class="font_arial">E-Mail: service@happigo.com</span><br />
+                湘ICP备17009657号 信息网络传播视听节目许可证号：1810530
+            </p>
+            <p class="footer_p">
+                <a href="#" target="_blank">
+                    <img src="__PUBLIC__/Home/picture/foot_img3.png" /></a>
+                <a href="#" target="_blank">
+                    <img src="__PUBLIC__/Home/picture/foot_img4.png" /></a>
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script src="__PUBLIC__/Home/gjs/md5.js" type="text/javascript"></script>
+<script src="__PUBLIC__/Home/gjs/user_login.js" type="text/javascript"></script>
+<script>
+    getcode();
+    ajaxform('#login_sms_form',"{:U('noteLogin')}");
+    ajaxform('#login_form',"{:U('login')}");
+
+
+    // qq登陆
+    var childWindow;
+    function toQzoneLogin()
+    {
+        // childWindow = window.open("{:U('auth')}","TencentLogin","width=800,height=500,menubar=0,scrollbars=1, resizable=1,status=1,titlebar=0,toolbar=0,location=1");
+        //childWindow = window.open("{:U('auth')}");
+        window.location.href="{:U('auth')}";
+    } 
+    
+    function closeChildWindow()
+    {
+        childWindow.close();
+    }
+</script>

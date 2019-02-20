@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>查看评价</title>
+	<script src="__PUBLIC__/Home/js/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/Home/js/jquery.form.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__PUBLIC__/Home/js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<ul>
+		<li>
+			<p>商品评价:</p>
+			<p style="color: red" >{$data.goods_evaluate}</p>
+		</li>
+		<hr/>
+		<li>
+			<p>服务评价:</p>
+			<p style="color: red" >{$data.serve_evaluate}</p>
+		</li>
+		<hr/>
+		<li>
+			<p>晒图：</p>
+			<p>
+				<volist name="data['img']" id="vo">
+				<img src="{$vo}" width="100">&emsp;
+				</volist>
+			</p>
+		</li>
+	</ul>
+	<hr/>
+	<?php if(empty($is)):?>
+		<form action="" method="post">
+		<input type="hidden" name="comment_id" value="{$data.id}">
+		<input type="hidden" name="member_id" value="{$data.member_id}" >
+		<ul>
+			<li>
+				<p>商家回复：</p>
+				<p><textarea name="content" cols="80" rows="7"></textarea></p>
+				<p><input type="submit" value="回复"></p>
+			</li>
+
+		</ul>
+	</form>
+	<?php else:?>
+		<ul>
+			<li>
+			  <p>已回复：</p>
+			   <p style="color:green" ><span>{$is.content}</span>&emsp;&emsp;&emsp;<span><?php echo date('Y-m-d H:i:s',$is['addtime'])?></span></p>
+			</li>
+
+		</ul>
+	<?php endif;?>
+	
+</body>
+</html>
+<script>
+
+	$('form').submit(function(){
+		var text = $('textarea').val();
+		if (text.length == 0) {
+			layer.msg('请填写回复内容！',{icon:2});
+			return false;
+		}
+		$(this).ajaxSubmit({
+			type:'post',
+			url: "{:U('view_desc')}",
+			dataType:'json',
+			success:function(msg){
+				if(msg == '1'){
+					layer.msg('回复成功',{icon:1});
+					setTimeout(function(){
+						window.parent.location.reload();
+					},1000);
+				}else{
+					layer.msg('回复失败',{icon:2});
+				}
+			}
+		});
+		return false;
+	});
+</script>

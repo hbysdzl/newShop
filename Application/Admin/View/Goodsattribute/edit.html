@@ -1,0 +1,58 @@
+<layout name="Index/header_footer" />
+<div class="main-div">
+    <form name="main_form" method="POST" action="__SELF__" enctype="multipart/form-data" >
+    	<input type="hidden" name="attr_id" value="<?php echo $data['attr_id']; ?>" />
+        <table cellspacing="1" cellpadding="3" width="100%">
+            <tr>
+                <td class="label">属性名称：</td>
+                <td>
+                    <input  type="text" name="attr_name" value="<?php echo $data['attr_name']; ?>" />
+                </td>
+            </tr>
+            <tr>
+                <td class="label">属性类别：</td>
+                <td>
+                	<?php if($data['attr_type']==1):?>
+                    <input  type="radio" name="attr_type" value="1" checked="checked"/>可选
+                    <input  type="radio" name="attr_type" value="0" />唯一
+                    <?php else:?>
+                   	<input  type="radio" name="attr_type" value="1" />可选
+                    <input  type="radio" name="attr_type" value="0" checked="checked"/>唯一
+                    <?php endif;?>
+
+                </td>
+            </tr>
+            <tr>
+                <td class="label">可选属性值：</td>
+                <td>
+                    <textarea rows="4" cols="35" name="attr_option_values" ><?php echo $data['attr_option_values'];?></textarea>
+                    每项用‘ ，’隔开填写
+                </td>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">所属商品类型：</td>
+                <td>
+                     <select name="type_id">
+                     <option value="">--请选择--</option>
+                     <?php foreach($type as $v):?>
+                     <?php if($v[type_id]==$data['type_id']):?>
+                     <option value="<?php echo $v['type_id']?>" selected="selected"><?php echo $v['type_name']?></option>
+                     <?php else:?>
+                      <option value="<?php echo $v['type_id']?>"><?php echo $v['type_name']?></option>
+                     <?php endif;?>
+                     <?php endforeach;?>
+                     </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="99" align="center">
+                    <input type="submit" class="button" value=" 确定 " />
+                    <input type="reset" class="button" value=" 重置 " />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script>
+</script>

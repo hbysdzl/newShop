@@ -1,0 +1,81 @@
+<layout name="Index/header_footer" />
+<!-- 搜索 -->
+<div class="form-div search_form_div">
+    <form method="GET" name="search_form">
+		<p>
+			会员名称：
+	   		<input type="text" name="member_name" size="25" value=""/>
+			<input type="submit" value=" 搜索 " class="button" />
+		</p>
+
+    </form>
+</div>
+<!-- 列表 -->
+<div class="list-div" id="listDiv">
+	<table cellpadding="3" cellspacing="1">
+    	<tr>
+            <th width="120">会员昵称</th>
+            <th width="120">头像</th>
+            <th >级别</th>
+            <th >可用积分</th>
+            <th >经验值</th>
+            <th width="60" >折扣率</th>
+            <th >注册邮箱</th>
+            <th width="90">注册手机号码</th>
+            <th width="140">注册时间</th>
+            <th >注册ip</th>
+            <th >注册地区</th>
+            <th >最后登录时间</th>
+            <th >最后登录ip</th>
+			<th width="80">操作</th>
+        </tr>
+		<?php foreach ($data as $k => $v): ?>
+			<tr class="tron">
+				<td><?php echo $v['nikname']; ?></td>
+				<td><img src="<?php echo $v['face']; ?>" width='50' ></td>
+				<td><?php echo $v['level']; ?></td>
+				<td><?php echo $v['jifen']; ?></td>
+				<td><?php echo $v['jyz']; ?></td>
+				<td><?php echo $v['rate']/10; ?>折</td>
+				<td><?php echo $v['email']; ?></td>
+				<td><?php echo $v['tel']; ?></td>
+				<td><?php echo date('Y-m-d H:i:s',$v['addtime']); ?></td>
+				<td><?php echo $v['registerip']; ?></td>
+				<td><?php echo $v['registeraddr']; ?></td>
+				<td><?php echo $v['lasttime'];?></td>
+				<td><?php echo $v['lastip']; ?></td>
+				
+		        <td align="center">
+		        	<!-- <?php echo U('recycle?goods_id='.$v['goods_id'].'&p='.I('get.p')); ?> -->
+	                <a href="#" onclick="member_del(this,<?php echo $v['id']?>)" title="删除">删除</a>
+		        </td>
+	        </tr>
+        <?php endforeach; ?>
+		<?php if(preg_match('/\d/', $page)): ?>
+        <tr><td align="right" nowrap="true" colspan="99" height="30"><?php echo $page; ?></td></tr>
+        <?php endif; ?>
+	</table>
+</div>
+<script type="text/javascript">
+//删除会员
+function member_del(obj,id) {
+	
+	layer.confirm('确定删除吗？', {
+	  btn: ['确定','取消'] //按钮
+	}, function(){
+	  
+	  $.get("{:U('delete')}",{id:id},function(msg){
+
+	  		if(msg.status == '1'){
+	  			layer.msg('删除成功', {icon: 1});
+	  			$(obj).parent().parent().remove();
+	  		}else{
+	  			layer.msg('系统繁忙请稍后重试', {icon: 2});
+	  		}
+
+	  },'json');
+
+	});
+
+}
+</script>

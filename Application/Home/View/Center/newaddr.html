@@ -1,0 +1,121 @@
+<layout name="public/layout"/>
+<div class="w1000 ClearFix margin_top20">
+
+	<?php $curr_page = 'newaddr';?>
+
+	<include file="public/member_left"/>
+	<div class="ur_right">
+		<!--uer_top-->
+		<div class="ur_location">
+			<a href="">我的快乐购</a>
+			<span>&gt;</span>
+			<a class="a_cur">地址管理</a>
+		</div>
+		<include file="public/member_top"/>
+		<!--uer_top-->
+		<div class="o_o_part">
+			<div class="part_h2">新增/修改收货地址</div>
+			<form action="" method="post">
+				<div class="new_addr">
+					<div class="addr_item">
+						<span class="label_n"><span class="c_red">*</span>收货人：</span>
+						<input class="itxt" name="true_name" id="true_name" type="text" placeholder="收货人姓名" >
+						<div class="addr_msg">
+							<span id="error_true_name"></span>
+						</div>
+					</div>
+					<div class="addr_item outer">
+
+						<span class="label_n"><span class="c_red">*</span>所在地区：</span>
+						<select class="city" name="province" id="province">
+       						<option value="">请选择省份</option>   
+		                </select>
+						<select class="city" name="city" id="city">
+		       				 <option value="">请选择城市</option>			            
+		        		</select>
+						<select class="city" name="town" id="town">				
+		        			<option value="">请选择区县</option>			            
+		        		</select>
+						
+						<div class="addr_msg">
+							<span id="error_statename"></span>
+						</div>
+					</div>
+					<div class="addr_item">
+						<span class="label_n"><span class="c_red">*</span>详细地址：</span>
+						<input placeholder="详细地址" name="address" class="itxt itxtaddr" id="address" type="text">
+						<div class="addr_msg">
+							<span id="error_address"></span>
+						</div>
+					</div>
+					<div class="addr_item">
+						<span class="label_n"><span class="c_red">*</span>手机号码：</span>
+						<input placeholder="手机号码" name="tel_phone" class="itxt itxt_tel" id="tel_phone" type="text">
+						<div class="addr_msg">
+							<span id="error_tel_phone"></span>
+						</div>
+					</div>
+					<div class="addr_item btn_item">
+						<button type="submit" style="width: 121px;height:37px;line-height: 37px;text-align: center;background-color: #94193f;color: #fff;font-size: 16px;border: none;cursor: pointer;">确定</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<!--pathend-->
+		<div class="addr_list">
+			<div class="addr_l_h2">
+				已保存收货地址（<span><?php echo count($addrdata)?></span>）
+			</div>
+			<table class="order_table">
+				<thead class="theads">
+					<tr>
+						<td style="padding-left: 40px;">收货人</td>
+						<td>收货人地址</td>
+						<td>手机</td>
+						<td>操作</td>
+					</tr>
+				</thead>
+				<tbody>
+					<volist name="addrdata" id="vo">
+					<tr>
+						<td style="padding-left: 40px;">{$vo.true_name}</td>
+						<td>{$vo.province} - {$vo.city} - {$vo.town} - {$vo.address}</td>
+						<td>{$vo.tel_phone}</td>
+						<td><a href="#">修改</a>&nbsp|&nbsp<a href="#">删除</a></td>
+					</tr>
+					</volist>
+					<tr class="tr-line">
+						<td colspan="5">您还没有任务收货地址 </td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<script src="__PUBLIC__/Home/city/area.js"></script>
+<script src="__PUBLIC__/Home/city/select.js"></script>
+
+<script type="text/javascript">
+	//jqureyForm插件提交表单
+    $('form').submit(function(){
+        //具体实现使用jqueryForm的方式ajax提交
+        $(this).ajaxSubmit({
+            url:"{:U('newaddr')}", 
+            type:'post',
+            dataType:'json',
+            success:function(msg){
+                if(msg.status==1){
+                    layer.msg('添加成功！');
+
+                    setTimeout(function(){
+                    	window.location = window.location;
+                    },1000);
+                }else{
+                    layer.msg(msg.error);
+                }
+            }
+        });
+        //阻止当前的表单默认的提交
+        return false;
+    });
+</script>

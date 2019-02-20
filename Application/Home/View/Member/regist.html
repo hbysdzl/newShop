@@ -1,0 +1,192 @@
+﻿<!doctype html>
+<html lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>{$page_title}</title>
+<meta name="keywords" content="{$page_keywords}" />
+<meta name="description" content="{$page_description}" />
+
+<script src="__PUBLIC__/Home/gjs/tingyun-rum.js"></script>
+<script src="__PUBLIC__/Home/gjs/jquery-1.7.2.min.js"></script>
+<script src="__PUBLIC__/Home/gjs/placeholderfriend.js"></script>
+<script src="__PUBLIC__/Home/gjs/dialog.min.js" id="dialog_js" charset="utf-8"></script>
+<link href="__PUBLIC__/Home/gcss/header.css" rel="stylesheet" />
+<link href="__PUBLIC__/Home/gcss/footer.css" rel="stylesheet" />
+<link href="__PUBLIC__/Home/gcss/register.css" rel="stylesheet" />
+<script src="__PUBLIC__/Home/js/jquery.form.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/Home/js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body>
+<div id="append_parent"></div>
+<!-- 头部 start-->
+<div class="full_sc">
+    <div class="w1000 header_center ClearFix">
+        <div class="h_c_logo">
+            <a href="{:U('Index/index')}">
+                <img src="__PUBLIC__/Home/picture/logo.jpg" /></a>
+        </div>
+        <div class="h_c_right">
+            <img src="__PUBLIC__/Home/picture/top_center.jpg" />
+        </div>
+    </div>
+</div>
+<!-- 头部 end-->
+
+<div class="w980">
+    <div class="login_box ClearFix">
+        <div class="logn_b_l ClearFix">
+            <img style='width:560px;height:360px' border='0' src='__PUBLIC__/Home/picture/05657833660318005.jpg' alt='288'/>      </div>
+        <div class="logn_b_r ClearFix">
+            <div class="lognul">
+                <div class="login_h2 ClearFix">
+                    <h2  style="color:#F11D20">用户注册</h2>
+                    <div class="lognrtop">已有帐号<a href="{:U('login')}">在此登录</a></div>
+                </div>
+<div class="mc">
+    <div class="form">
+        <form id="register_form" method="post" action="">
+            <div class="item item1">
+                <input type="text" placeholder="昵称" class="itxt onfocustxt" autocomplete="off" name="nikname" id="nikname">
+            </div>
+            <div class="item item1">
+                <input type="text" placeholder="请输入Email" class="itxt onfocustxt" autocomplete="off" name="email" id="email">
+            </div>
+            
+            <div class="item item2">
+                <input type="password" placeholder="请输入密码" autocomplete="off" tabindex="4" maxlength="20" class="itxt" name="password" id="password">
+        
+            </div>
+            <div class="item item2">
+                <input type="password" placeholder="请再次输入密码" class="itxt" autocomplete="off"  tabindex="5" maxlength="20" name="cpassword" id="cpassword">
+            </div>
+            <div class="item item2">
+                <input type="text" placeholder="请输入手机号码" class="itxt onfocustxt" autocomplete="off" tabindex="1" maxlength="11" name="tel" id="tel">
+            </div>
+            <div class="item item4">
+                <input type="text" placeholder="验证码" autocomplete="off"  maxlength="6" tabindex="3" class="itxt itxt_yzm onfocustxt" name="telcode" id="telcode">
+                
+                <a href="javascript:void(0);" id="send_auth_code" class="ncm-btn ml5" tabindex="2">
+                    <div id="hide_times">获取短信验证码</div>
+                    <!-- <input type="button"> -->
+                </a>
+                
+            </div>
+            <div class="item item3">
+                <input type="text" placeholder="验证码" autocomplete="off" name="code" id="code" style="width:120px;height: 40px;padding-left: 5px;" >
+                <img src="{:U('chkcode')}" onclick="this.src='{:U('chkcode','',false)}/'+Math.random();" /> 
+            </div>
+            <div id="captcha_div" style="padding-top:110px; display: none;"></div>
+            
+            <div class="item item5">
+                <div class="login-btn">
+                   <button type="submit" style="background: #F11D20;width: 310px;height: 40px; border: none;color: #fff;cursor:pointer;" >立即注册</button>
+                </div>
+                
+                <div class="agree">
+                    <input type="checkbox" class="mustclick" tabindex="8" name="mustclick" id="agree" />
+                    <label for="autoLogin">注册即表示同意快乐购<span><a href="#" target="_blank">《用户服务协议》</a></span>条款</label>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--底部-->
+<div class="footer Clearfix">
+    <div class="footer_bottom">
+        <div class="w1200">
+            <p>
+                <span class="font_arial">Copyright© 2006-2016 happigo. All Rights Reserved </span>
+                免费服务热线: 400-705-1111 | 固话也可拨打: 400-705-8800
+                <span class="font_arial">E-Mail: service@happigo.com</span><br />
+                湘ICP备17009657号 信息网络传播视听节目许可证号：1810530
+            </p>
+            <p class="footer_p">
+                <a href="#" target="_blank">
+                    <img src="__PUBLIC__/Home/picture/foot_img3.png" /></a>
+                <a href="@" target="_blank">
+                    <img src="__PUBLIC__/Home/picture/foot_img4.png" /></a>
+            </p>
+        </div>
+    </div>
+</div>
+<!--底部 end-->
+</body>
+</html>
+<script type="text/javascript">
+//jqureyForm插件提交表单
+//实现使用jQueryForm实现表单提交
+    $('form').submit(function(){
+        //具体实现使用jqueryForm的方式ajax提交
+        $(this).ajaxSubmit({
+            url:"{:U('regist')}", 
+            type:'post',
+            dataType:'json',
+            success:function(msg){
+                if(msg.status==1){
+                    layer.alert('恭喜您！注册成功，请登录邮箱完成验证', {
+                          skin: 'layui-layer-molv' //样式类名
+                          ,closeBtn: 2
+                        
+                        });
+                }else{
+                    
+                    layer.alert(msg.error, {
+                      skin: 'layui-layer-molv' //样式类名
+                      ,closeBtn: 2
+                    
+                    });
+                }
+            }
+        });
+        //阻止当前的表单默认的提交
+        return false;
+    });
+
+//倒计时  
+var countdown=60;  
+function settime(val) {
+
+    if (countdown == 0) {  
+        val.html("重新获取");  
+        countdown = 60;  
+        return false;  
+    } else {  
+        val.html("已发送(" + countdown + ")");  
+        countdown--;  
+    }  
+    setTimeout(function() {  
+        settime(val);  
+    },1000);
+}
+
+//点击按钮发送验证码
+    $('#hide_times').click(function() {
+        //获取手机号码
+        var code=$('#tel').val();
+        $.ajax({
+            type:"post",
+            url:"{:U('sendcode')}",
+            data:{tel:code},
+            dataType:"json",
+            success: function(msg){
+                    if (msg.status==1) {
+                        layer.tips('发送成功，注意查收！', '#tel', {
+                              tips: [1, '#3595CC'],
+                              time: 2000
+                            });
+                        settime($('#hide_times'));
+                    }else{
+                        layer.tips(msg.error, '#tel', {
+                              tips: [1, '#3595CC'],
+                              time: 2000
+                            });
+                    }
+            }
+        });
+    });
+</script>

@@ -1,0 +1,97 @@
+<layout name="Index/header_footer" />
+<div class="main-div">
+    <form name="main_form" method="POST" action="__SELF__" enctype="multipart/form-data">
+        <table cellspacing="1" cellpadding="3" width="100%">
+			<tr>
+				<td class="label">请选择上级分类：</td>
+				<td>
+					<select name="parent_id">
+						<option value="0">顶级分类</option>
+						<?php foreach ($parentData as $k => $v): ?>
+							<option value="<?php echo $v['cat_id']; ?>"><?php echo str_repeat('-', 8*$v['level']).$v['cat_name']; ?></option>
+						<?php endforeach; ?>					
+					</select>
+				</td>
+			</tr>
+            <tr>
+                <td class="label">分类名称：</td>
+                <td>
+                    <input  type="text" name="cat_name" value="" />
+                </td>
+            </tr>
+            <tr>
+                <td class="label">是否精选：</td>
+                <td>
+                    <input  type="radio" name="is_selection" value="1" />是
+                    <input  type="radio" name="is_selection" value="0" checked="checked" />否
+                </td>
+            </tr>
+             <tr>
+                <td class="label">分类筛选属性：</td> 	
+                <td>
+                	<ul>
+                		<li>
+                			<a href="javascript:void(0);" onclick="newadd(this)">[+]</a>
+		                    <select name="type_id[]">
+		                    	<option value="">--请选择类型--</option>
+		                    	<volist name="goodstype" id="vo">
+		                    	<option value="{$vo.type_id}">{$vo.type_name}</option>
+		                    	</volist>
+		                    </select>&nbsp&nbsp&nbsp
+		                    <select name="search_attr_id[]">
+		                    	<option value="">--请选择属性--</option>
+		                    </select>
+		                 </li>
+		            </ul>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="99" align="center">
+                    <input type="submit" class="button" value=" 确定 " />
+                    <input type="reset" class="button" value=" 重置 " />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script>
+	$("select[name='type_id[]']").change(function(){
+		var sel=$(this);
+		//获取选择类型的id
+		var type_id=sel.val();
+		
+		//ajax获取对应属性字符串
+		var opt="<option value=''>--请选择属性--</option>";
+		if(type_id!=''){
+			$.ajax({
+				type:"get",
+				url:"{:U('Goods/ajaxGetAttr','',false)}/type_id/"+type_id,
+				dataType:"json",
+				success:function(data){
+					//将获取的属性数据写入下拉框中
+					
+					
+					$(data).each(function(k,v){
+						opt+="<option value='"+v.attr_id+"'>"+v.attr_name+"</option>";
+					});
+					sel.next('select').html(opt); ////next取得一个包含匹配的元素集合中每一个元素紧邻的后面同辈元素的元素集合。
+				}
+			});
+		}else{
+			sel.next('select').html(opt);
+		}
+	});
+	
+	//点击克隆筛选属性
+	function newadd(a){
+		var li=$(a).parent();
+		if(li.find('a').html()=='[+]'){
+			var newli=li.clone(true);//设置为true以便复制元素的所有事件处理
+			newli.find('a').html('[-]');
+			li.after(newli);
+
+		}else{
+			li.remove();
+		}
+	}
+</script>

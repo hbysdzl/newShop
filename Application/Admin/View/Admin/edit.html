@@ -1,0 +1,58 @@
+<layout name="Index/header_footer" />
+<div class="main-div">
+    <form name="main_form" method="POST" action="__SELF__" enctype="multipart/form-data" >
+    	<input type="hidden" name="admin_id" value="<?php echo $data['admin_id']; ?>" />
+        <table cellspacing="1" cellpadding="3" width="100%">
+        	<tr>
+                <td class="label">角色分配：</td>
+                <td>
+                	<volist name="roles" id="vo">
+                    <if condition="in_array($vo['role_id'],$roleids)">
+                    <input  type="checkbox" name="role_id[]" value="{$vo.role_id}" checked="checked" />{$vo.role_name}&nbsp&nbsp&nbsp
+                    <else/>
+                    <input  type="checkbox" name="role_id[]" value="{$vo.role_id}"/>{$vo.role_name}&nbsp&nbsp&nbsp
+                    </if>
+                    </volist>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">账号：</td>
+                <td>
+                    <input  type="text" name="username" value="<?php echo $data['username']; ?>" />
+                </td>
+            </tr>
+            <tr>
+                <td class="label">密码：</td>
+                <td>
+                    <input type="password" size="25" name="password" />
+                </td>
+            </tr>
+            <tr>
+                <td class="label">确认密码：</td>
+                <td>
+                    <input type="password" size="25" name="cpassword" />
+                </td>
+            </tr>
+            <tr>
+                <td class="label">是否启用：</td>
+                <td>
+                	<if condition="$data['is_use'] eq 1">
+                    <input  type="radio" name="is_use" checked="checked" value="1" />启用
+                    <input  type="radio" name="is_use" value="0" />禁用
+                    <else/>
+                    <input  type="radio" name="is_use"  value="1" />启用
+                    <input  type="radio" name="is_use" checked="checked" value="0" />禁用
+                    </if>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="99" align="center">
+                    <input type="submit" class="button" value=" 确定 " />
+                    <input type="reset" class="button" value=" 重置 " />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script>
+</script>

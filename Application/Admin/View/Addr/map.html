@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的位置</title>
+    <style>
+        body {
+            height: 600px;
+        }
+        #container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="container"></div>
+</body>
+</html>
+<script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=YCGBZ-ZRAW5-UTGIO-Q5YV2-TUKZ2-RBB4A"></script>
+<script>
+function init() {
+    //定义变量获取地图显示的容器
+    var option={'zoom':15,};//定义具体的缩放
+    var map = new qq.maps.Map(document.getElementById("container"),option );//实例化地图核心类初始化地图
+       
+   // var center=map.panTo(new qq.maps.LatLng(39.916527,116.397128));// 地图的具体位置坐标 
+    
+    //地址解析后的回调函数
+    var callbacks={
+            complete:function(result){
+                map.setCenter(result.detail.location);
+                
+              //实例化覆盖物
+                var infoWin = new qq.maps.InfoWindow({
+                    map: map
+                });
+                infoWin.open();
+                infoWin.setContent('<div style="width:-50px;padding-top:10px;">我在这里噢！</div>'); //  自定义内容
+                infoWin.setPosition(result.detail.location);//指定具体位置
+            },
+        }
+        //实例化地图解析类
+    geocoder = new qq.maps.Geocoder(callbacks);
+        //调用相关方法将实际地址解析为经纬度坐标
+    geocoder.getLocation("{$path}");
+        
+} 
+
+//调用
+init();
+</script>

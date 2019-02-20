@@ -1,0 +1,87 @@
+<?php 
+//获取树形分类数据
+
+$memcache = new \Memcache();
+$memcache -> connect('127.0.0.1',11211);
+
+$catData = unserialize($memcache->get('goodsCat'));
+
+if($catData === false){
+    $catModel = D('Goodscategory');
+    $catData = $catModel->getNavCatData();
+
+    $memcache -> set('goodsCat',serialize($catData),0,14400);
+}
+?>
+ <!--轮播区域-->
+<div class="full_big_eye">
+    <!--菜单-->
+	
+    <div class="index_type">
+		<ul class="index_type_ul">
+		<?php foreach($catData as $k1=>$v1):?>
+			<li>
+                <span><?php echo $v1['cat_name']?><b>></b></span>
+                <div class="nav_type_list" data="1">
+                    <?php foreach($v1['children'] as $k2=>$v2):?>
+                    <dl>
+                        <dt><a href="{:U('Search/search','cat_id='.$v2['cat_id'])}" target="_blank" >{$v2['cat_name']}</a></dt>
+                        <dd>
+                            <?php foreach($v2['children'] as $k3=>$v3 ):?>
+                            
+                            <a href="{:U('Search/search','cat_id='.$v3['cat_id'])}" target="_blank">{$v3.cat_name}</a>
+                          
+                            <?php endforeach;?>
+                        </dd>
+                    </dl>
+                    <?php endforeach;?>
+                </div>
+			</li>
+		<?php endforeach;?>
+		</ul>
+	</div>
+    <!--菜单-->
+    <!--轮播图-->
+    <div class="full_eye">
+    	<div id="inBaner">
+    		<ul class="big_eye_pic">
+    			<li style="display: block;">
+    				<a href="" >
+    					<img src="__PUBLIC__/Home/image/web-101-101-2.jpg"/>
+    				</a>
+    			</li>
+    			<li>
+    				<a href="" class="tpl">
+    					<img src="__PUBLIC__/Home/image/web-101-101-1.jpg"/>
+    				</a>
+    			</li>
+    			<li>
+    				<a href="" class="tpl">
+    					<img src="__PUBLIC__/Home/image/web-101-101-3.jpg"/>
+    				</a>
+    			</li>
+    			<li>
+    				<a href="" class="tpl">
+    					<img src="__PUBLIC__/Home/image/web-101-101-4.jpg"/>
+    				</a>
+    			</li>
+    			<li>
+    				<a href="" class="tpl">
+    					<img src="__PUBLIC__/Home/image/web-101-101-5.jpg"/>
+    				</a>
+    			</li>
+    		</ul>
+    		<div class="btn">
+    		    <ul>
+    		    	<li class="cur"></li>
+    		    	<li></li>
+    		    	<li></li>
+    		    	<li></li>
+    		    	<li></li>
+    		    </ul>
+    		</div>
+    	</div>
+    </div>
+    <!--轮播图-->
+</div>
+<!--轮播区域-->

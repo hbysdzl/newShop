@@ -1,0 +1,79 @@
+<extend name="public:viewjc"/>
+<block name="order_status"><div class="order_Status os_oredr"></div></block>
+<block name="content">
+<div class="public_b">
+	<div class="w1200">
+		<h2 class="payfor_h2"><i></i>在线支付</h2>
+		<div class="payfo_tips"><i></i>订单已提交成功，现在就去付款吧</div>
+		<div class="oder_me">
+			<div class="o_n_t1">
+				<div class="o_n_l">您的订单号<span><?php echo date('YmdHis',time()).$orderdesc['id'].$orderdesc['member_id']?></span></div>
+                <div class="o_n_m">应付金额：<span>￥{$orderdesc['total_price']}</span></div>
+                <div class="o_n_r">支付方式：在线支付</div>
+			</div>
+			<div class="o_n_t2">
+				<span class="s_fs_12">WEB9B9CE1E0D4,请于</span>
+                <span class="s_fs_14" data="3060">
+                	<span class="s_fs_18" id="t_h">00</span>
+
+                	秒 内完成付款,否则系统会将您的订单取消
+                </span>
+			</div>
+		    <div class="choose_pay">
+		    	<div class="choose_pay_box">
+		    		<div class="choose_agin">
+                        <span class="s_radio"><label for="type_01" class="r_txt s_fs_18">支付宝/微信</label></span>
+                        <div class="agin_radio">
+                            <span class="s_a_radio l_t_pay">
+                                <input id="type_02" name="pay_method" value="alipay" type="radio" checked="checked" >
+                                <label for="type_02" class="r_txt"><i class="i_zfb"></i>支付宝支付</label>
+                            </span>
+                            <span class="s_a_radio l_t_pay">
+                                <input id="type_03" name="pay_method" value="zxwx" type="radio">
+                                <label for="type_03" class="r_txt"><i class="i_wx"></i>微信支付</label>
+                            </span>
+                        </div>
+                    </div>
+		    	</div>
+		    	<form action="index.php?act=payment&amp;op=real_order" method="POST" id="buy_form">
+                    <input name="pay_sn" value="310517395876931757" type="hidden">
+                    <input id="payment_code" name="payment_code" value="" type="hidden">
+		    	</form>
+		    	<div class="btnsure_bg">
+		    	    <div class="sureorder">
+		    	    	<div class="jine">应付总额：<span class="fwxh_30">￥</span><span class="span_m">{$orderdesc.total_price}</span></div>
+                        <a class="btn_sure" href="javascript:;" id="next_button">去付款&gt;</a>
+		    	    </div>
+		    	</div>
+		    </div>
+		</div>
+	</div>
+</div>
+<script src="__PUBLIC__/Home/js/autoTime.js" type="text/javascript" charset="utf-8"></script>
+<script>
+	$(function(){
+		var time = "<?php echo date('Y-m-d H:i:s',$orderdesc['addtime']+2100)?>";
+		//alert(time);
+		start(time,'s_fs_18');
+	});
+	//根据支付方式跳转
+	$('#next_button').on('click',function(){
+		 
+		 $('input[name=pay_method]').each(function(k,v){
+		 	if ($(v).prop('checked')) {
+
+		 		var zhi = $(v).val();
+		 		if(zhi == 'alipay'){
+		 			//支付宝支付
+		 			window.location.href = "{:U('Payment/payIndex','order='.$orderdesc['id'])}";
+
+				 }else{
+		 			//微信支付
+		 		}
+		 	}
+		 
+		 });
+		 
+	});
+</script>
+</block>

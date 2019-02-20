@@ -1,0 +1,27 @@
+<layout name="public/layout"/>
+<include file="public/header"/>
+<!--品牌区-->
+<div class="w1200">
+	<div class="qinha_box">
+		<div class="qinha_title">
+			<div class="v_h2">
+                <p class="h2_top">品牌特卖</p>
+			</div>
+		</div>
+	    <ul class="qinha_ul">
+            <volist name='brand' id="vo">
+    	    	<li>
+    	    		<a href="{:U('Search/brandlst','brand_id='.$vo['brand_id'])}" target="_blank"><img src="{$vo.logo}"/></a>
+    	    	</li>
+	    	</volist>
+	    </ul>
+	</div>
+	<!--分页-->
+    <div class="page_list">
+    	<div class="page_r pages">
+    		{$pagestr}
+    	</div>
+    </div>
+    <!--分页end-->
+</div>
+<!--品牌区-->

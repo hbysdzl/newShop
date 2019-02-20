@@ -1,0 +1,47 @@
+<layout name="Index/header_footer" />
+<div class="main-div">
+    <form name="main_form" method="POST" action="__SELF__" enctype="multipart/form-data">
+        <table cellspacing="1" cellpadding="3" width="100%">
+            <tr>
+                <td class="label">属性名称：</td>
+                <td>
+                    <input  type="text" name="attr_name" value="" />
+                </td>
+            </tr>
+            <tr>
+                <td class="label">属性类别：</td>
+                <td>
+                    <input  type="radio" name="attr_type" value="1" />可选
+                    <input  type="radio" name="attr_type" value="0" checked="checked" />唯一
+                </td>
+            </tr>
+            <tr>
+                <td class="label">可选属性值：</td>
+                <td>
+                    <textarea rows="4" cols="35" name="attr_option_values" value="" ></textarea>
+                    每项用‘，’隔开填写
+                </td>
+            </tr>
+            <tr>
+                <td class="label">所属商品类型：</td>
+                <td>
+                 
+                    <select name="type_id">
+                    <option value="0">__请选择__</option>
+                    <volist name="type" id="vo">
+                     <option value="{$vo.type_id}">{$vo.type_name}</option>
+                     </volist>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="99" align="center">
+                    <input type="submit" class="button" value=" 确定 " />
+                    <input type="reset" class="button" value=" 重置 " />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script>
+</script>

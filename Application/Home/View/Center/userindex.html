@@ -1,0 +1,36 @@
+<layout name="public/layout"/>
+
+<div class="w1000 ClearFix margin_top20">
+	<!--左侧end-->
+	<?php $curr_page='userindex';?>
+	<include file="public/member_left"/>
+	<!--左侧end-->
+	<!--右侧top-->
+	<div class="ur_right">
+		<include file="public/member_top"/>
+	    <div class="uc_c_right">
+	    	<div class="order_tips">
+	    		<span class="o_t_h2">订单提醒：</span>
+                <ul>
+                    <li>
+                    	<a href="">未支付订单<span id="order_nopay_count">(0)</span></a>
+                    </li>
+                    <li>
+                    	<a href="">未确认收货<span id="order_nopay_count">(0)</span></a>
+                    </li>
+                    <li class="li_last">
+                        <a href="">未评价订单<span id="order_noeval_count">(0)</span></a>
+                        <div class="pl_tips">评价一个商品最多可获得500积分</div>
+                    </li>
+                </ul>
+	    	</div>
+	    	<div class="seufe">
+	    		<div class="d_h2"><h2><span></span>我的收藏</h2></div>
+	    		<div class="detail_l_con4">
+	    			<div class="no_data"><img src="__PUBLIC__/Home/image/no_data.png"><span>您还没有收藏任何商品!</span></div>
+	    		</div>
+	    	</div>
+	    </div>
+	</div>
+	<!--右侧top-->
+</div>

@@ -1,0 +1,173 @@
+
+<layout name="public/layout"/>
+
+<include file='public/header'/>
+<!--商品区-->
+<div class="w1200">
+	<div class="her_top">
+		<div class="her_title">
+			<ul class="her_menu">
+				<li class="current">
+					<i class="today_zb_icon"></i>
+					精选服饰
+					<i class="jx_icon_down"></i>
+				</li>
+				<li>
+					<i class="yesto_icon"></i>
+					限时抢购
+					<i class="jx_icon_down"></i>
+				</li>
+			</ul>
+		</div>
+	    <div class="pro_con" style="display: block;">
+	    	<div class="P_left">
+	    		<div class="groDiv">
+	    			<div style="position: relative;overflow: hidden;">
+	    				<ul class="groUlOut">
+	    				<volist name='goods_best' id='vo'>
+	    					<li style="float: left;width: 224px;">
+	    						<div class="x">精选服饰</div>
+	    						<a href="{:U('Goods/goods','goods_id='.$vo['goods_id'])}" class="pro" target="_blank" >
+	    							<?php ShowImage($vo['logo']);?>
+	    						</a>
+	    						<p class="box_glay">
+	    							<a href="{:U('Goods/goods','goods_id='.$vo['goods_id'])}" class="pro_text" target="_blank" >
+	    								<span>{$vo.goods_name}</span>
+	    							</a>
+	    						</p>
+	    						<p class="p_num">
+	    							No.9195763
+	    						</p>
+	    						<div class="now_price">
+	    							<div class="price">
+	    								<span class="bigfont">
+	    									<span class="f_14">￥</span><span>{$vo.shop_price}</span>
+	    								</span>
+	    								<span><del>￥{$vo.market_price}</del></span>
+	    								<div class="zk"><?php echo round($vo['shop_price']/$vo['market_price']*10,1)?>折</div>
+	    							</div>
+	    						</div>
+	    					</li>
+	    				</volist>
+	    				</ul>
+	    			</div>
+	    		</div>
+	    	</div>
+	    </div>
+	    <div class="pro_con" style="display: none;">
+	    	<div class="P_left">
+	    		<div class="groDiv">
+	    			<div style="position: relative;overflow: hidden;">
+	    				<ul class="groUlOut">
+	    				<volist name='goods_promote' id='vo'>
+	    					<li style="float: left;width: 224px;">
+	    						<div class="s">限时抢购</div>
+	    						<a href="{:U('Goods/goods','goods_id='.$vo['goods_id'])}" class="pro" target="_blank" >
+	    							<?php ShowImage($vo['logo']);?>
+	    						</a>
+	    						<p class="box_glay">
+	    							<a href="{:U('Goods/goods','goods_id='.$vo['goods_id'])}" class="pro_text" target="_blank" >
+	    								<span>{$vo.goods_name}</span>
+	    							</a>
+	    						</p>
+	    						<p class="p_num">
+	    							No.9195763
+	    						</p>
+	    						<div class="now_price">
+	    							<div class="price">
+	    								<span class="bigfont">
+	    									<span class="f_14">￥</span><span>{$vo.promote_price}</span>
+	    								</span>
+	    								<span><del>￥{$vo.market_price}</del></span>
+	    								<div class="zk"><?php echo round($vo['promote_price']/$vo['market_price']*10,1)?>折</div>
+	    							</div>
+	    						</div>
+	    					</li>
+	    				</volist>
+	    				</ul>
+	    			</div>
+	    		</div>
+	    	</div>
+	    </div>
+	</div>
+    <!--第二区-->
+    <div class="ver_box">
+        <ul class="qinha_ul ClearFix"></ul>
+    </div>
+    <div class="qinha_box">
+    	<div class="qinha_title">
+    		<div class="v_h2">
+    			<p class="h2_top">限时抢购</p>
+    			<p class="h2_bottom">天天特价 早10点强势上新 </p>
+    		</div>
+    	</div>
+    	<div class="qinha_cons">
+    	    <ul class="qinha_ul">
+    	    	<volist name='goods_promote_time' id='vo'>
+    	    	<li>
+    	    		<div class="djs_time">
+    	    			还剩 <span class='ss{$vo.goods_id}' >00</span>
+    	    		</div>
+    	    		<a href="{:U('Goods/goods','goods_id='.$vo['goods_id'])}" target="_blank" >
+    	    		<img src="{:C('IMG_URL')}{$vo.logo}" width="595" height="350" onload='start("<?php echo date('Y-m-d H:i:s',$vo['promote_end_time'])?>","<?php echo 'ss'.$vo['goods_id']?>")'>
+    	    		</a>
+    	    	</li>
+    	    	</volist>
+    	    </ul>
+    	</div>
+    </div>
+    <!--第二区-->
+    <!--第三区-->
+    <div class="jinpin_box">
+    	<div class="qinha_title">
+    		<div class="v_h2">
+                <p class="h2_top">品类精选</p>
+                <p class="h2_bottom">品类齐全 轻松购物</p>
+            </div>
+    	</div>
+    	<ul class="jinpin_ul">
+    	<volist name='goods_cat_list' id='vo' key='k' >
+    		<li>
+    			<a href="{:U('Search/search','cat_id='.$vo['cat_id'])}" target="_blank"><img src="__PUBLIC__/Home/image/jinpin_{$k}.png"/></a>
+    			<a href="{:U('Search/search','cat_id='.$vo['cat_id'])}" target="_blank" class="ppsx_tc">
+                    <div class="ppsx_tc_xx">
+                        <div class="ppsx_tc_xx1">
+                            <div class="ppsx_xx_zk"><span><?php echo rand(45,500)?></span>元起</div>
+                            <div class="ppsx_xx_qg">立即抢购</div>
+                        </div>
+                    </div>
+                </a>
+    		</li>
+    	</volist>
+    	</ul>
+    </div>
+    <!--第三区-->
+    <!--第四区-->
+    <div class="day_box">
+    	<div class="qinha_title">
+    		<div class="v_h2">
+    			<p class="h2_top">今日发现</p>
+                <p class="h2_bottom">精致好物 更快乐的生活</p>
+    		</div>
+    	</div>
+    	<ul class="day_goods">
+    	<volist name='goods_new_day' id='vo'>
+			<li>
+				<a href="{:U('Goods/goods','goods_id='.$vo['goods_id'])}" class="a_con_list" target="_blank">
+					<p class="p_img"><?php showImage($vo['logo'])?></p>
+				</a>
+				<p class="p_title">
+					<span>【<?php echo round($vo['shop_price']/$vo['market_price']*10,1);?>折】</span>{$vo.goods_name}
+				</p>
+				<p class="p_p">
+					<span class="price1">￥<span>{$vo.shop_price}</span></span>
+					<span class="price2"><del>￥{$vo.market_price}</del></span>
+					<a href="{:U('Goods/goods','goods_id='.$vo['goods_id'])}" class="gwc" target="_blank"></a>
+				</p>
+			</li>
+    	</volist>
+    	</ul>
+    </div>
+    <!--第四区-->
+</div>
+<!--商品区-->

@@ -1,0 +1,40 @@
+<?php 
+    $members = cookie('members');
+
+    //获取会员等级
+    $level  = M('number_level')->select();
+    foreach($level as $k=>$v){
+            if($members['jyz'] >= $v['bottom_num'] && $members['jyz'] <= $v['top_num']){
+                $members['level'] = $v['level_name'];
+            }
+    }
+    
+?>
+<div class="uc_top ClearFix">
+	<div class="uc_t_l">                         
+        <a href="" class="p_big">个人中心</a>                         
+        <p class="p_small">您好，欢迎来到放心购</p>
+    </div>
+    <div class="uc_t_m">
+    	<div class="m_img">
+    		<div class="hg_box">
+    			<img src="__PUBLIC__/Home/image/hg_img_0.png"/>
+    		</div>
+    		<img src="<?php echo cookie('members')['face']? cookie('members')['face'] :'__PUBLIC__/Home/image/user_center_img4.jpg' ?> "/>
+    	</div>
+    	<div class="m_user_info">
+    		<div class="m_name" title="WEB9B9CE1E0D4">FXG{$members['id']}</div>
+    		<div class="m_grade"><span>{$members.level}</span></div>
+    		<div class="m_jf_yhj">
+    			<a href="">可用积分<span id="use_saveamt_num">{$members['jifen']}</span>分</a>
+                <span class="l"></span>                                 
+                <a class="" href="">可用优惠券<span id="voucher_count">6</span>张</a>
+    		</div>
+    	</div>
+    </div>
+    <div class="uc_t_r">
+    	<p><span class="p_l">注册时间：</span><?php echo date('Y-m-d H:i:s',$members['addtime'])?></p>
+        <p><span class="p_l">上次登录时间：</span>{$members['lasttime']}</p>
+        <p><span class="p_l">上次登录IP：</span>{$members['lastip']}</p>
+    </div>
+</div>

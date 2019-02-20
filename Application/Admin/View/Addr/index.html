@@ -1,0 +1,87 @@
+<layout name="Index/header_footer" />
+<!-- 搜索 -->
+<div class="form-div search_form_div">
+    <form method="GET" name="search_form">
+		<p>
+			会员名称：
+	   		<input type="text" name="member_name" size="25" value=""/>
+			<input type="submit" value=" 搜索 " class="button" />
+		</p>
+
+    </form>
+</div>
+<!-- 列表 -->
+<div class="list-div" id="listDiv">
+	<table cellpadding="3" cellspacing="1">
+    	<tr><th width="50" >ID</th>
+    		<th>会员</th>
+            <th width="120">收货人</th>
+            <th width="120">联系电话</th>
+            <th>省份</th>
+            <th>城市</th>
+            <th>县/区</th>
+            <th>详细地址</th>
+            <th width="150" >添加时间</th>
+			<th width="150">操作</th>
+        </tr>
+		<?php foreach ($data as $k => $v): ?>
+			<tr class="tron">
+				<td>{$v.id}</td>
+				<td><?php echo $v['nikname']; ?></td>
+				<td><?php echo $v['true_name']; ?></td>
+				<td><?php echo $v['tel_phone']; ?></td>
+				<td><?php echo $v['province']; ?></td>
+				<td><?php echo $v['city']; ?></td>
+				<td><?php echo $v['town'];?></td>
+				<td><?php echo $v['address']; ?></td>
+				
+				<td><?php echo date('Y-m-d H:i:s',$v['addtime']); ?></td>
+				
+				
+		        <td align="center">
+		        	<a href="#" onclick='view_map("{$v.province}-{$v.city}-{$v.town}-{$v.address}","{:U('map','id='.$v['id'])}","60%","80%")' title="查看位置">查看位置</a>&emsp;|&emsp;
+	                <a href="#" onclick="addr_del(this,<?php echo $v['id']?>)" title="删除">删除</a>
+		        </td>
+	        </tr>
+        <?php endforeach; ?>
+		<?php if(preg_match('/\d/', $page)): ?>
+        <tr><td align="right" nowrap="true" colspan="99" height="30"><?php echo $page; ?></td></tr>
+        <?php endif; ?>
+	</table>
+</div>
+<script type="text/javascript">
+//删除地址
+function addr_del(obj,id) {
+	
+	layer.confirm('确定删除吗？', {
+	  btn: ['确定','取消'] //按钮
+	}, function(){
+	  
+	  $.get("{:U('delete')}",{id:id},function(msg){
+
+	  		if(msg.status == '1'){
+	  			layer.msg('删除成功', {icon: 1});
+	  			$(obj).parent().parent().remove();
+	  		}else{
+	  			layer.msg('系统繁忙请稍后重试', {icon: 2});
+	  		}
+
+	  },'json');
+
+	});
+
+}
+
+
+/*查看地图*/
+function view_map(titles,url,w,h){
+	layer.open({
+	  type: 2,
+	  title: titles,
+	  shadeClose: true,
+	  shade: 0.5,
+	  area: [w,h],
+	  content: url //iframe的url
+	}); 
+}
+</script>

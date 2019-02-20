@@ -1,0 +1,140 @@
+<layout name="Index/header_footer" />
+<div class="main-div">
+    <form name="main_form" method="POST" action="__SELF__" enctype="multipart/form-data" >
+    	<input type="hidden" name="cat_id" value="<?php echo $data['cat_id']; ?>" />
+        <table cellspacing="1" cellpadding="3" width="100%">
+			<tr>
+				<td class="label">上级权限：</td>
+				<td>
+					<select name="parent_id">
+						<option value="0">顶级权限</option>
+						<?php foreach ($parentData as $k => $v): ?> 
+						<?php if($v['cat_id'] == $data['cat_id'] || in_array($v['cat_id'], $children)) continue ; ?> 
+						<option <?php if($v['cat_id'] == $data['parent_id']): ?>selected="selected"<?php endif; ?> value="<?php echo $v['cat_id']; ?>"><?php echo str_repeat('-', 8*$v['level']).$v['cat_name']; ?></option>
+						<?php endforeach; ?>					</select>
+				</td>
+			</tr>
+            <tr>
+                <td class="label">分类名称：</td>
+                <td>
+                    <input  type="text" name="cat_name" value="<?php echo $data['cat_name']; ?>" />
+                </td>
+            </tr>
+            <tr>
+                <td class="label">是否精选：</td>
+                <td>
+                	<?php if($data['is_selection'] == '1'):?>
+                	<input  type="radio" name="is_selection" value="1" checked="checked"/>是
+                	<input  type="radio" name="is_selection" value="0" />否
+                	<?php else:?>
+                	<input  type="radio" name="is_selection" value="1"/>是
+                	<input  type="radio" name="is_selection" value="0" checked="checked" />否
+                	<?php endif;?>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">筛选属性：</td>                
+		       <td>
+		       <ul>
+		       		<?php if(isset($attrData)):?>
+				       	<volist name="attrData" id="vo1">
+				       			<?php 
+				       				if($key==0){
+										$gg='[+]';
+									}else{
+										$gg='[-]';
+									}
+		       					?>
+				       		<li>
+				       			   <a href="javascript:void(0)" onclick="newadd(this)">{$gg}</a>
+				                   <select name="type_id[]">
+				                    <option value=''>--请选择类型--</option>
+				                    <volist name="goodstype" id="vo">
+				                    	<?php if($vo['type_id']==$vo1['type_id']):?>
+				                    	<option value='{$vo.type_id}' selected='selected'>{$vo.type_name}</option>
+				                    	<?php else:?>
+				                    	<option value='{$vo.type_id}'>{$vo.type_name}</option>
+				                    	<?php endif;?>
+				                    </volist>
+				                    </select>
+				                   <select name="search_attr_id[]" attr_id="{$vo1.attr_id}">
+				                   		<option value=''>--请选择属性--</option>
+				                   </select> 
+				             </li>
+				         </volist>
+				      <?php else:?>
+				      	 <li>
+                			<a href="javascript:void(0);" onclick="newadd(this)">[+]</a>
+		                    <select name="type_id[]">
+		                    	<option value="">--请选择类型--</option>
+		                    	<volist name="goodstype" id="vo">
+		                    	<option value="{$vo.type_id}">{$vo.type_name}</option>
+		                    	</volist>
+		                    </select>&nbsp&nbsp&nbsp
+		                    <select name="search_attr_id[]">
+		                    	<option value="">--请选择属性--</option>
+		                    </select>
+		                 </li>
+				     <?php endif;?>
+		        </ul>
+		       </td>
+            </tr>
+            <tr>
+                <td colspan="99" align="center">
+                    <input type="submit" class="button" value=" 确定 " />
+                    <input type="reset" class="button" value=" 重置 " />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script>
+//ajax实现二级联动
+$("select[name='type_id[]']").change(function(){
+	//获取类型ID
+	var sel=$(this);
+	var type_id=sel.val();
+	var opt="<option value=''>--请选择属性--</option>";
+	if(type_id!=''){
+		$.ajax({
+			type:"get",
+			url:"{:U('Goods/ajaxGetAttr','',false)}/type_id/"+type_id,
+			dataType:"json",
+			success:function(data){
+				//获取原有的属性id
+				var old_attr_id=sel.next('select').attr('attr_id');
+				//将获取的数据放入到对应的下拉框中
+				$(data).each(function(k,v){
+					if(v.attr_id==old_attr_id){
+						var ga='selected="selected"';
+					}else{
+						var ga='';
+					}
+					opt+="<option value='"+v.attr_id+"' "+ga+">"+v.attr_name+"</option>";
+				});
+				
+				sel.next('select').html(opt);//取得一个包含匹配的元素集合中每一个元素紧邻的后面同辈元素的元素集合。
+			}
+		});
+	}else{
+		sel.next('select').html(opt);
+	}
+});
+
+//实现点击克隆多个属性函数
+function newadd(a){
+	var li=$(a).parent();
+	if(li.find('a').html()=='[+]'){
+		//克隆一行
+		var newli=li.clone(true);
+		newli.find('a').html('[-]');
+		//追加节点
+		li.after(newli);
+	}else{
+		li.remove();
+	}
+}
+
+//进入页面自动触发类型的change事件，获取属性
+$("select[name='type_id[]']").trigger('change');
+</script>

@@ -1,0 +1,82 @@
+<extend name="public/viewjc" />
+
+<block name="order_status"><div class="order_Status"></div></block> 
+
+<block name="content">
+	<!--tip-->
+		<div class="public_b">
+			<div class="w1200">
+	<?php if($data):?>
+	<form method="post" action="{:U('Order/orderList')}">
+	<div class="mycart w990 mt10 bc">
+		<h2><span>我的购物车</span></h2>
+		<table>
+			<thead>
+				<tr>
+					<th class="col6">请选择</th>
+					<th class="col1">商品名称</th>
+					<th class="col2">商品信息</th>
+					<th class="col3">单价</th>
+					<th class="col4">数量</th>
+					<th class="col5">小计</th>
+					<th class="col6">操作</th>
+				</tr>
+			</thead>
+		
+			<tbody>
+			<?php $tp=0;?>
+			<volist name="data" id="vo">
+				<tr goods_id="{$vo.goods_id}" goods_attr_id="{$vo.goods_attr_id}">
+					<td><input type="checkbox" value="{$vo.goods_id}-{$vo.goods_attr_id}" name="bythis[]"></td>
+					<td class="col1"><a href=""><?php echo showImage($vo['sm_logo'])?></a><strong><a href="">{$vo.goods_name}</a></strong></td>
+					<td class="col2">{$vo.goods_attr_str}</td>
+					<td class="col3">￥<span>{$vo.price}</span>元</td>
+					<td class="col4"> 
+						<a href="javascript:;" class="reduce_num"></a>
+						<input type="text" name="amount" value="{$vo.goods_number}" class="amount"/>
+						<a href="javascript:;" class="add_num"></a>
+					</td>
+					<td class="col5">￥<span><?php $xj=$vo['price']*$vo['goods_number'];$tp+=$xj; echo $xj;?></span>元</td>
+					<td class="col6"><a href="javascript:0">删除</a></td>
+				</tr>
+			</volist>	
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="6">购物金额总计： <strong>￥ <span id="total">{$tp}</span>元</strong></td>
+				</tr>
+			</tfoot>
+		</table>
+		<div class="cart_btn w990 bc mt10">
+			<a href="/" class="continue">继续购物</a>
+			<a href="javascript:0" class="checkout" onclick="$('form').submit()">结 算</a>
+		</div>
+	</div>
+	</form>
+	<?php else:?>
+	<div class="car_no_goods">
+		<img src="__PUBLIC__/Home/image/car_no_goods.jpg"/>
+		<div class="no_goods">
+			<p class="no_goods_t">亲，您的购物车空空如也，快去抢购心仪商品吧~</p>
+			<p><a href="/" class="no_goods_buy">立即购买</a></p>
+		</div>
+	</div>
+	<?php endif;?>
+	<!--为你推荐-->
+	<div class="guesslike_div">
+		<div class="remat">
+			<div class="d_h2">
+				<ul>
+                    <li class="on">猜你喜欢</li>
+                </ul>
+			</div>
+			<div class="detail_l_con4">
+				<div class="noguess">暂无商品向您推荐</div>
+			</div>
+		</div>
+	</div>
+	<!--为你推荐-->
+	</div>
+	</div>
+		<!--tipend-->
+</block>

@@ -1,0 +1,336 @@
+﻿<layout name="public/layout"/>
+<link href="__PUBLIC__/Home/gcss/goods_detail.css" rel="stylesheet" />
+<script src="__PUBLIC__/Home/gjs/jquery.jqzoom-core.js" type="text/javascript"></script>
+<script src="__PUBLIC__/Home/gjs/jquery.als-1.7.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/Home/gjs/parabola.js" type="text/javascript"></script>
+<script>
+    var goods_commonid = '187211';
+    var goods_id = '351660';
+    var goods_price = '149.00';
+    var spec_param = [{"sign":"653|136116","url":"http:\/\/www.happigo.com\/item-0-351660.html"},{"sign":"653|136117","url":"http:\/\/www.happigo.com\/item-0-351661.html"}];
+    var goods_storage = '50';
+</script>
+<script src="__PUBLIC__/Home/gjs/jquery.nav.js" type="text/javascript"></script>
+<script src="__PUBLIC__/Home/gjs/goods_detail.js" type="text/javascript"></script>
+
+<div class="w1200 ClearFix">
+<div class="location">
+    <a href="{:U('Index/index')}">首页</a><span>></span>
+    <volist name='position' id='vo'>
+    <a href="{:U('Search/search','cat_id='.$vo['cat_id'])}">{$vo.cat_name}</a><span>></span>
+    </volist>
+    <span>{$goods.goods_name}</span>
+</div>
+        
+<div class="d_content">
+	<div class="d_c_top ClearFix" id="d_c_top">
+<!--顶部左边-->
+<div class="d_c_t_l">
+    <div class="tab-w img-w">
+        <div class="divw clearfix">
+            <a title="" rel="gal1" class="jqzoom" href="{:C('IMG_URL')}{$goods.logo}">
+                <img title="triumph" src="{:C('IMG_URL')}{$goods.logo}">
+            </a>
+        </div>
+        <div class="box-tab als-container">
+            <div class="ul-w als-viewport">
+                <ul data-left="0" class="ClearFix  als-wrapper" id="thumblist">
+                	<volist name='goods_pic' id='vo'>
+                    <li class="als-item">
+                        <a rel="{
+                        gallery: 'gal1', 
+                        smallimage: '/Public/Upload/{$vo.pic}',largeimage: '/Public/Upload/{$vo.pic}'
+                        }" href="javascript:void(0);">
+                            <?php showImage($vo['pic'])?>
+                        </a>
+                    </li>
+                    </volist>
+                </ul>
+                <!-- class="zoomThumbActive" -->
+            </div>
+            <div class="g_t_l_hd">
+                <a href="javascript:;" class="btn l als-prev">L</a>
+                <ul></ul>
+                <a href="javascript:;" class="btn r als-next">R</a>
+            </div>
+        </div>
+    </div>
+    <div class="detail_share">
+        <div class="d_bh">编号：{$goods.goods_id}</div>
+          <div class="detail_sc detail_sc_off" onclick="javascript:collect_goods('187211','count','goods_collect');">
+              <i class="i_addsc"></i>
+              收藏商品
+          </div>
+        </div>
+</div>
+<!--顶部左边 end-->
+<!--顶部中间-->
+<div class="d_c_t_r">
+    <div class="detail_top">
+        <h1 class="detail_tit ">
+        	<span class="sp_hot"><em class="em_l"></em>{$goods.goods_name}</em></span>
+        	
+        </h1>
+        <h2 class="detail_tit_md">{$goods.seo_description}</h2>
+    <div class="price_wrap">
+        <!--价格-->
+        <div class="detail_price clearfix">
+            <span class="pop_tit title1">快乐价</span>
+            <div class="price_box">
+                <span class="price_now" style="color:#DF0010"><em class="em_sign">¥ </em>{$goods.shop_price}</span>
+            </div>
+        </div>                      
+    </div>
+       
+    <div class="detail_freight ClearFix">
+        <span class="pop_tit ">运费</span>
+        <span id="freight" class="pop_black">包邮</span>
+    </div>
+    <div class="detail_freight ClearFix">
+        <span class="pop_tit ">上架时间</span>
+        <span id="freight2" class="pop_black"><?php echo date('Y-m-d H:i',$goods['addtime']);?></span>
+    </div>
+<form action="" method="post" class="choose" id="form_cart">
+    <input type="hidden" name="goods_id" value={$goods.goods_id}>                        
+  <!-- 选择  -->
+    <div class="detail_color">
+    <style>
+         .btn-scanbuy{background:#F11D20;border:2px solid #F11D20}  
+         .color_ul .on{border:2px solid #F11D20}
+    </style>
+        <ul>
+    	<?php foreach ($goods_attr as $k => $v): ?>
+            <li class="product">
+                <dl>
+                    <dt>{$k}：</dt>
+                    <dd>
+                    <?php foreach ($v as $k1 => $v1): ?>
+                        <a  href="javascript:;" <?php if($k1==0) echo 'class="selected"'; ?>>{$v1.attr_value} 
+                        <input type="radio" name="goods_attr_id[{$v1.attr_id}]" value="{$v1.id}" <?php if($k1==0) echo 'checked="checked"'; ?> />
+                        </a>
+                    <?php endforeach; ?>
+                    </dd>
+                </dl>
+            </li>             
+        <?php endforeach; ?>
+        </ul> 
+        <div class="model_wrap count_wrap">
+            <span class="pop_tit">数量</span>
+            <div class="wrap_input">
+                <a href="javascript://" data-param="0" class="btn-reduce">-</a>
+                <input name="goods_number" value="1" id="buy_num" class="text" onkeyup="this.value=this.value.replace(/\D/g, '');">
+                <a href="javascript://" data-param="0" class="btn-add">+</a>
+            </div>
+        </div>
+            <a href="javascript:void(0)" class="scanBuy">
+                <div class="btn-scanbuy">立即购买</div>
+                <div class="scanBuy-ewm">
+                    <p>该商品支持微信扫码购买哦！</p>
+                    <div class="scan-img">
+                        <img src="__PUBLIC__/Home/picture/249914_2_m_0_0.png" />
+                    </div>
+                </div>
+            </a>
+       <div class="model_wrap">
+            <div class="model_in_stock">
+              <div class="detail_tips">直播商品在线实付满199减10元</div>
+            </div>
+        </div>
+</form>
+ </div>
+</div>
+</div>
+<!--顶部中间 end-->
+<!--顶部右边店铺信息-->
+<div class="d_c_right"><!--360-->
+    <!--店铺信息-->
+    <div class="detail_ewm">
+        <p class="ewm_bg_img">
+            <img src="__PUBLIC__/Home/picture/249914_2_m_0_0.png">
+            <b class="b_ewm_icon"></b>
+        </p>
+        <span class="fs_14">微信 支付宝扫码订购</span>
+        <span class="fs_16">在线支付满199减10</span>
+    </div>
+</div>
+<!--顶部右边 end-->
+<!--加入购物车飞入小图-->
+<div class="fly_item" id="flyItem">
+    <img width="40" height="40" src="__PUBLIC__/Home/picture/qiang_r_img1.jpg">
+</div>
+<!--加入购物车飞入小图 end-->
+</div>
+<!--底部商品详情-->
+<div class="g-b-box clearfix">
+<!--为您推荐-->
+<div class="g-b-l">
+    <div class="tj_title">为您推荐</div>
+    <volist name='recommendGoods' id='vo' empty='暂无商品数据'>
+     <div class="g_b_goods">
+        <a class="g_b_li" target="_blank" href="{:U('goods','goods_id='.$vo['goods_id'])}">
+            <?php showImage($vo['logo']);?>
+            <p class="g_b_name">{$vo.goods_name}</p>
+            <p class="g_b_price"><span class="g_b_p1" style="color:#DF0010"><em>￥</em>{$vo.shop_price}</span><span class="g_b_p2">￥{$vo.market_price}</span></p>
+        </a>
+    </div>
+    </volist>
+</div>
+<div class="g-b-r">
+    <!--商品详情导航-->
+    <div class="d_c_m">
+        <div class="detail_nav ClearFix">
+            <div class="detail_nav_c">
+                <div class="w1200 p_relative">
+                    <ul class="nav_box">
+                        <li class="on"><a href="#parameter_box">商品参数</a></li>
+                        <li ><a href="#goodsinfo_box">商品详情</a></li>
+                        <li><a href="#service_sale_box">配送与售后</a></li>   
+                        <li><a href="#appraise_box">用户评价</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d_c_m_ads">
+    </div>
+<div class="top0">
+  <div id="parameter_box">
+  <div class="detail_lists parameter_box">
+    <div class="d_h2">
+        <h2>商品参数</h2>
+    </div>
+    <div class="detail_l_con1">
+        <ul>
+            <li>
+                <div class="d_l_con1_l">品牌：</div>
+                <div class="d_l_con1_r">{$brand['brand_name']}</div>
+            </li>
+            <volist name='w_attr' id='vo'>
+            <li>
+                <div class="d_l_con1_l">{$vo.attr_name}：</div>
+                <div class="d_l_con1_r">{$vo.attr_value}</div>
+            </li>
+            </volist>
+        </ul>
+    </div>
+ </div>
+</div>
+<div id="goodsinfo_box">
+   <div class="detail_lists goodsinfo_box">
+	    <div class="d_h2">
+	        <h2>商品详情</h2>
+	    </div>
+        <div class="detail_l_con2">
+            <div align="center">
+	            <div style="margin: auto;">
+					<div style="margin:auto;">
+						{$goods.goods_desc}
+					</div>
+				</div>                       
+ 			</div>
+		</div>
+	</div>
+</div>
+<div id="service_sale_box">
+        <div class="detail_lists parameter_box">
+            <div class="d_h2">
+                <h2>配送与售后</h2>
+            </div>
+            <div class="detail_l_con1">
+		        <img src="__PUBLIC__/Home/picture/kefu_01.png">                                                        
+		        <img src="__PUBLIC__/Home/picture/kjg_peisong_02.png">                                                       
+		        <img src="__PUBLIC__/Home/picture/kjg_fahuo_02.png">                                                        
+		        <img src="__PUBLIC__/Home/picture/kjg_tuihuo_02.png">                                                       
+		        <img src="__PUBLIC__/Home/picture/kjg_fapiao_02.png">                                                        
+		        <img src="__PUBLIC__/Home/picture/jiage_01.png">                                                    
+            </div>
+        </div>
+</div>
+<div id="appraise_box">
+    <div class="detail_lists appraise_box">
+        <div class="d_h2">
+            <h2>用户评价</h2>
+        </div>
+        <?php if($evaluate):?>
+        <div class="detail_l_con3">
+            <div id="appraise_h2" class="appraise_h2">
+                <div class="appraise_t1">评价心得</div>
+                <div class="appraise_t2">用户满意度</div>
+                <div class="appraise_t4">用户信息</div>
+            </div>
+            <ul id="comments_list">
+                <?php foreach($evaluate as $k=>$v):?>
+                <li class="appraise_li">
+                    <div class="a_li_t1">
+                        <div class="appr_cons">{$v.serve_evaluate}</div>
+                            <div class="appraise_img ClearFix">
+                                <ul class="appr_img_list ">
+                                    <?php foreach($v['pic'] as $k1=>$v1):?>
+                                    <li data="{$v1.img}">
+                                    <img src="{$v1.img}"><b></b>
+                                    </li>
+                                    <?php endforeach;?>
+                                </ul>
+                                <div class="big_img" style="display: none;">
+                                    <img src="">
+                                </div>
+                            </div>
+                            <div class="appr_time"><?php echo date('Y-m-d H:i',$v['addtime'])?></div>
+                            <?php if($v['reply']):?>
+                                <div class="call_me_back">客服回复：<span>{$v.reply}</span></div>
+                            <?php endif;?>
+                    </div>
+                                
+                    <div class="a_li_t2">
+                        <span style="color: orange"><?php echo str_repeat('★',$v['grade'])?></span>
+                    </div>
+                    <div class="a_li_t4">
+                        <img src="{$v.face}"><br>
+                        <span>{$v.nikname}</span>
+                    </div>
+                </li>
+                <?php endforeach;?>                                 
+            </ul>
+        </div>
+        <?php else:?>
+             <div class="detail_l_con3">
+                <div class="no_appraise">暂无评论</div>
+             </div>
+        <?php endif;?>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+    //选择货品，如颜色、版本等
+    $(".product a").click(function(){
+        $(this).addClass("selected").siblings().removeClass("selected");
+        $(this).find("input").attr({checked:"checked"});
+        //去除虚边框
+        $(this).blur();
+    });
+    //立即购买加入购物车
+    $('.scanbuy').click(function(){
+        
+        var form_data=$('#form_cart').serialize();
+        $.ajax({
+            type:"post",
+            url:"{:U('Cart/add')}",
+            data:form_data,
+            dataType:"json",
+            success:function(msg){
+                if(msg.ok==0){
+                    alert(msg.error);
+                    $('#tishi').html('!'+msg.error);
+                    $('#tishi').fadeIn(1000);
+                    $('#tishi').fadeOut(3000)
+                }else{
+                    location.href="{:U('Cart/cartList')}"
+                }
+            }
+        });
+    }); 
+</script>

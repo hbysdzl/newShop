@@ -1,0 +1,33 @@
+<layout name="Index/header_footer" />
+<!-- 搜索 -->
+<div class="form-div search_form_div">
+    <form method="GET" name="search_form">
+		<p>
+			分类名称：
+	   		<input type="text" name="cat_name" size="30" value="<?php echo I('get.cat_name'); ?>" />
+		</p>
+		<p><input type="submit" value=" 搜索 " class="button" /></p>
+    </form>
+</div>
+<!-- 列表 -->
+<div class="list-div" id="listDiv">
+	<table cellpadding="3" cellspacing="1" style="text-align:center">
+    	<tr>
+            <th >分类名称</th>
+            <th >上级分类的ID，0：代表顶级</th>
+			<th width="150">操作</th>
+        </tr>
+		<?php foreach ($data as $k => $v): ?>
+			<tr class="tron">
+				<td><?php echo str_repeat('-', 4*$v['level']); ?><?php echo $v['cat_name']; ?></td>
+				<td><?php echo $v['parent_id']; ?></td>
+		        <td align="center">
+		        	<a href="<?php echo U('edit?cat_id='.$v['cat_id'].'&p='.I('get.p')); ?>" title="编辑">编辑</a> |
+	                <a href="<?php echo U('delete?cat_id='.$v['cat_id'].'&p='.I('get.p')); ?>" onclick="return confirm('确定要删除吗？');" title="移除">移除</a>
+		        </td>
+	        </tr>
+        <?php endforeach; ?>
+	</table>
+</div>
+<script>
+</script>

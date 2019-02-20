@@ -1,0 +1,169 @@
+<layout name="Index/header_footer" />
+
+<style type="text/css">
+.main-div table {background: #BBDDE5;}
+ p {margin: 0;}
+</style>
+    
+       <div class="list-div">
+            <table width="100%" cellpadding="3" cellspacing="1">
+            <tbody>
+                <tr>
+                    <th colspan="4">订单信息</th>
+                </tr>
+                <tr>
+                    <td align="right" width="18%">订单号:</td>
+                    <td align="left" width="34%">{$data.id}</td>
+                    <td align="right" width="15%">订单金额:</td>
+                    <td align="left">{$data.total_price}</td>
+                </tr>
+                <tr>
+                    <td align="right" width="18%">下单时间:</td>
+                    <td align="left" width="34%"><?php echo date('Y-m-d H:i:s',$data['addtime'])?></td>
+                    <td align="right" width="15%">会员:</td>
+                    <td align="left">{$data.email}</td>
+                </tr>
+                <tr>
+                	<td align="right" width="18%">支付宝交易号:</td>
+                    <td align="left" width="34%">{$data.alipaid}</td>
+                    <td align="right" width="18%">收货地址:</td>
+                    <td align="left" width="34%">收货人：{$data.true_name}&emsp;电话：{$data.tel_phone}&emsp;{$data.province}{$data.city}{$data.town}{$data.address}</td>
+                    
+                </tr>
+                <tr>
+                    <td align="right" width="18%">快递公司:</td>
+                    <td align="left" width="34%">{$data.com|default="商家未发货"}</td>
+                    <td align="right" width="15%">运单号:</td>
+                    <td align="left">{$data.no|default='商家未发货'}</td>
+                </tr>
+                <tr>
+                    <td align="right" width="10%">商品详情:</td>
+                    <td align="left" width="34%">
+                    	<ul style="list-style: decimal">
+            			<?php foreach($orderGoods as $k1=>$v1):?>
+    	            		<li style="margin-bottom: 20px;">
+                                
+    	            			<p style="margin: 0;float: left;margin-right: 30px;"><?php showImage($v1['logo'],'80');?></p>
+    	            			<p style="margin: 0;">
+                                    <p>{$v1.goods_name}</p>
+                                    <p>{$v1.goods_attr_str}</p><span>数量：{$v1.goods_number}件</span>
+                                </p>
+                                
+    	            		</li>
+            		    <?php endforeach;?>
+            	       </ul>
+                    </td>
+                    <td align="right" width="15%">订单状态:</td>
+                    <td align="left">
+                    	<?php if($data['post_status']==0):?>
+                            待支付
+                        <?php elseif($data['post_status']==1) :?>
+                            待发货
+                        <?php elseif($data['post_status']==2):?>
+                            待收货
+                        <?php elseif($data['post_status']==3):?>
+                            待评价
+                        <?php elseif($data['post_status']==-1):?>
+                            已过期
+                        <?php else:?>
+                            已完成
+                        <?php endif;?>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+     <?php if($data['post_status'] == 1):?>
+        <form action="__SELF__" method="post" name="theForm" enctype="multipart/form-data">
+        <div class="list-div">
+            <table width="100%" cellpadding="3" cellspacing="1">
+                <tr>
+                    <th colspan="4">发货信息</th>
+                </tr>
+                <tr>
+                    <td class="label">快递公司:</td>
+                    <td>
+                        <select name="com">
+                            <volist name='selectKuai' id='vo'>
+                            <option value="{$vo.no}">{$vo.com}</option>
+                            </volist>
+                        </select>                       
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">快递单号:</td>
+                    <td>
+                        <input type='text' name='no'  value='' /> 
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <input type="hidden" name="id" value="{$data.id}">
+        <input type="hidden" name="post_status" value=2>
+        <div class="button-div">
+            <input type="submit" value="发货" />
+            <input type="reset" value=" 重置 " />
+        </div>
+    </form>
+     <?php endif;?>
+
+<div class="list-div">
+   <table width="100%" cellpadding="3" cellspacing="1">
+     <tbody>
+         <tr>
+             <th colspan="4">地图信息</th>
+         </tr>
+         <tr>
+             <td>
+             <div class="list-div" id="container" style="width:100%;height:300px;"></div>
+             </td>
+         </tr>        
+     </tbody>
+  </table>
+</div>
+
+<!-- 创建收货地址地图 -->
+<script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=YCGBZ-ZRAW5-UTGIO-Q5YV2-TUKZ2-RBB4A"></script>
+<script>
+//初始化地图函数 
+function init() {
+	//定义变量获取地图显示的容器
+	var option={'zoom':15,};//定义具体的缩放
+    var map = new qq.maps.Map(document.getElementById("container"),option );//实例化地图核心类初始化地图
+       
+   // var center=map.panTo(new qq.maps.LatLng(39.916527,116.397128));// 地图的具体位置坐标 
+    
+    //地址解析后的回调函数
+    var callbacks={
+    	    complete:function(result){
+    	        map.setCenter(result.detail.location);
+    	        
+    	        
+    	       /* var marker = new qq.maps.Marker({
+    	            map:map,
+    	            position: result.detail.location
+    	        });
+    	        var marker = new qq.maps.Label({
+    	            position: result.detail.location,
+    	            map: map,
+    	            content:'文本标注'
+    	        });*/
+    	      //实例化覆盖物
+    	        var infoWin = new qq.maps.InfoWindow({
+    	            map: map
+    	        });
+    	        infoWin.open();
+    	        infoWin.setContent('<div style="width:-50px;padding-top:10px;">收货位置</div>'); //  自定义内容
+    	        infoWin.setPosition(result.detail.location);//指定具体位置
+    	    },
+    	}
+    	//实例化地图解析类
+   	geocoder = new qq.maps.Geocoder(callbacks);
+  		//调用相关方法将实际地址解析为经纬度坐标
+   	geocoder.getLocation("{$data.province}{$data.city}{$data.town}{$data.address}");
+    	
+} 
+
+//调用
+init();
+</script>

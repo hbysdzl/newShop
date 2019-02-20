@@ -1,0 +1,86 @@
+<layout name="Index/header_footer" />
+<!-- 搜索 -->
+<div class="form-div search_form_div">
+    <form method="GET" name="search_form">
+		<p>
+			商品名称：
+	   		<input type="text" name="goods_name" size="25" value="<?php echo I('get.goods_name')?I('get.goods_name'): ''?>"/>
+			<input type="submit" value=" 搜索 " class="button" />
+		</p>
+
+    </form>
+</div>
+<!-- 列表 -->
+<div class="list-div" id="listDiv">
+	<table cellpadding="3" cellspacing="1">
+    	<tr><th width="50" >ID</th>
+    		<th>商品名称</th>
+            <th width="120">会员</th>
+            <th width="250">评价分值</th>
+            <th width="100" >等级</th>
+            <th width="150" >评价时间</th>
+			<th width="150">操作</th>
+        </tr>
+		<?php foreach ($data as $k => $v): ?>
+			<tr class="tron">
+				<td>{$v.id}</td>
+				<td><?php echo $v['goods_name']; ?></td>
+				<td><?php echo $v['nikname']; ?></td>
+				<td><span style="color: orange;font-size: 22px;" ><?php echo str_repeat('★ ',$v['grade']) ?></span></td>
+				<td>
+					<?php if($v['grade'] >= '0' && $v['grade'] < '3'):?>
+						<span style="color:green">差评！</span>
+					<?php elseif($v['grade'] >= '3' && $v['grade'] <= '4'):?>
+						<span style="color: #fba48a">中评！</span>
+					<?php else:?>
+						<span style="color: #f83e05;">好评！</span>
+					<?php endif;?>		
+				</td>
+				<td><?php echo date('Y-m-d H:i:s',$v['addtime'])?></td>
+		        <td align="center">
+		        	<a href="#" onclick="view_desc('查看评价','__CONTROLLER__/view_desc/id/{$v.id}','60%','80%')" title="详情">详情</a>&emsp;|&emsp;
+	                <a href="#" onclick="addr_del(this,<?php echo $v['id']?>)" title="删除">删除</a>
+		        </td>
+	        </tr>
+        <?php endforeach; ?>
+		<?php if(preg_match('/\d/', $page)): ?>
+        <tr><td align="right" nowrap="true" colspan="99" height="30"><?php echo $page; ?></td></tr>
+        <?php endif; ?>
+	</table>
+</div>
+<script type="text/javascript">
+//删除地址
+function addr_del(obj,id) {
+	
+	layer.confirm('确定删除吗？', {
+	  btn: ['确定','取消'] //按钮
+	}, function(){
+	  
+	  $.get("{:U('delete')}",{id:id},function(msg){
+
+	  		if(msg.status == '1'){
+	  			layer.msg('删除成功', {icon: 1});
+	  			$(obj).parent().parent().remove();
+	  		}else{
+	  			layer.msg('系统繁忙请稍后重试', {icon: 2});
+	  		}
+
+	  },'json');
+
+	});
+
+}
+
+
+/*查看地图*/
+function view_desc(titles,url,w,h){
+	layer.open({
+	  type: 2,
+	  title: titles,
+	  shadeClose: true,
+	  shade: 0.5,
+	  area: [w,h],
+	  content: url //iframe的url
+	}); 
+}
+</script>

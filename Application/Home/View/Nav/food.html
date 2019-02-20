@@ -1,0 +1,28 @@
+<layout name="public/layout"/>
+
+<include file='public/header'/>
+
+<!--图片大图end-->
+<!--类容-->
+<div class="w1200">
+	<ul class="con_list_pic">
+		<volist name="sgoods['goods']" id='vo' >
+		<li>
+			<a href="{:U('Goods/goods','goods_id='.$vo['goods_id'])}" class="a_list_con" target="_blank" >
+				<p class="p_img"><?php showImage($vo['logo'])?></p>
+				<p class="p_title">{$vo.goods_name}</p>
+				<div class="p_p">
+					<div class="p_p_left">
+						<span class="price2"><del>￥{$vo.market_price}</del>&nbsp;</span>
+						<span class="price1">快乐价<span class="money_icon">￥</span><span>{$vo.shop_price}</span></span>
+					</div>
+					<div class="p_p_right">
+						<span class="mryh_add_car"><?php echo round($vo['shop_price']/$vo['market_price']*10,1)?>折</span>
+					</div>
+				</div>
+			</a>
+		</li>
+		</volist>
+    </ul>
+</div>
+<!--类容end-->

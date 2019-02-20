@@ -1,0 +1,30 @@
+<?php 
+//获取树形分类数据
+$memcache = new \Memcache();
+$memcache -> connect('127.0.0.1',11211);
+
+$catData = unserialize($memcache->get('goodsCat'));
+?>
+<!--菜单-->
+	<div class="index_type">
+		<ul class="index_type_ul">
+		<?php foreach($catData as $k1=>$v1):?>
+			<li>
+                <span><?php echo $v1['cat_name']?><b>></b></span>
+                <div class="nav_type_list" data="1">
+                <?php foreach($v1['children'] as $k2=>$v2):?>
+                    <dl>
+                    	<dt><a href="{:U('Search/search','cat_id='.$v2['cat_id'])}" target="_blank" >{$v2['cat_name']}</a></dt>
+                        <dd>
+							<?php foreach($v2['children'] as $k3=>$v3 ):?>
+                        	<a href="{:U('Search/search','cat_id='.$v3['cat_id'])}" target="_blank">{$v3.cat_name}</a>
+                       		<?php endforeach;?>
+                        </dd>
+                    </dl>
+                <?php endforeach;?>
+                </div>
+			</li>
+		<?php endforeach;?>
+		</ul>
+	</div>
+    <!--菜单-->

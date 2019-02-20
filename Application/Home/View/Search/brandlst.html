@@ -1,0 +1,37 @@
+<layout name="public/layout"/>
+<div class="w1200">
+	<!--面包屑-->
+	<div class="top_nv">
+		<span><a href="{:U('Index/index')}">首页</a></span>
+		  <span>></span>
+		<span>品牌馆：<a href="javascript:void(0);">"{$brand.brand_name}"</a></span>
+	</div>
+	<!--面包屑-->
+	<div class="box_list">
+		<div class="sl_list">
+			<ul>
+				<volist name="brand_data" id='vo' empty='暂无该结果商品！' >
+				<li>
+					<a href="{:U('Goods/goods','goods_id='.$vo['goods_id'])}" target="blank" >
+						<span class="list_img"><?php showImage($vo['logo'])?></span>
+						<span class="sl_list_con">
+							<span class="sl_price">
+								<b class="sl_price1"><span>¥{$vo.shop_price} </span></b>
+								<b class="sl_price2"><s>¥{$vo.market_price} </s></b>
+							</span>
+						</span>
+						<span class="sl_title">{$vo.goods_name}</span>
+					</a>
+				</li>
+				</volist>
+			</ul>
+		</div>
+	</div>
+    <!--分页-->
+    <div class="page_list">
+      	<div class="page_r pages"> 
+       		{$result['page_str']}
+       	</div>
+    </div>
+    <!--分页end-->
+</div>

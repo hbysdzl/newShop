@@ -1,0 +1,35 @@
+<layout name="public/layout"/>
+<div class="nav_ter">
+    <div class="top_img">
+    	<div class="top_box">
+    		<img src="__PUBLIC__/Home/image/list_top_1.jpg"/>
+    	</div>
+	</div>
+<div class="w1200">
+	
+	<include file="public/menu"/>
+	
+	<!--精品推荐-->
+	<div class="j_nav">
+		<h2><i class="i_today_zb"></i>精品推荐</h2>
+		<ul>
+			<volist name='newdata' id='vo'>
+				<li>
+					<a href="{:U('Goods/goods','goods_id='.$vo['goods_id'])}" target="_blank" >
+						<?php showImage($vo['logo']);?>
+						<span class="span_con">
+							<p class="p_title" style="color: #fff;" >{$vo.goods_name}</p>
+							<p class="p_price">
+								<span class="p_price1">￥<span>{$vo.shop_price}</span></span>
+								<span class="p_price2">￥{$vo.market_price}</span>
+								<span class="p_zk"><?php echo round($vo['shop_price']/$vo['market_price']*10,1)?>折</span>
+							</p>
+						</span>
+					</a>
+				</li>
+			</volist>
+		</ul>
+	</div>
+	<!--精品推荐end-->
+</div>
+</div>

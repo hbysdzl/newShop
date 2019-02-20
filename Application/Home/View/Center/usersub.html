@@ -1,0 +1,131 @@
+<layout name="public/layout"/>
+<link rel="stylesheet" href="__PUBLIC__/Home/lib/jQueryCalendar/css/laydate.css" />
+<script src="__PUBLIC__/Home/lib/jQueryCalendar/js/laydate.js"></script>
+
+<link rel="stylesheet" href="__PUBLIC__/Home/lib/webuploader/0.1.5/webuploader.css" />
+<script src="__PUBLIC__/Home/lib/webuploader/0.1.5/webuploader.js"></script>
+<div class="w1000 ClearFix margin_top20">
+<!--左侧end-->
+<?php $curr_page = 'usersub';?>
+<include file="public/member_left"/>
+<!--左侧end-->
+<div class="ur_right ClearFix">
+	<!--uer_top-->
+	<include file="public/member_top"/>
+	<div class="ur_location">
+		<a href="">我的放心购</a>
+		<span>&gt;</span>
+		<a class="a_cur">个人资料</a>
+	</div>
+	<!--uer_top-->
+	<div class="base_info">
+		<div class="info_top">
+			<div class="bi_l">
+				<div class="m_img">
+					<div class="hg_box">
+						<img src="__PUBLIC__/Home/image/hg_img_0.png">
+					</div>
+					<img src="<?php echo cookie('members')['face']? cookie('members')['face'] :'__PUBLIC__/Home/image/user_center_img4.jpg' ?> ">
+				</div>
+				<!--<a class="" href="">修改头像</a>-->
+			</div>
+			<div class="bi_r">
+				<div class="m_username">用户名：<span><?php echo cookie('members')['nikname']?></span></div>
+				<div class="m_grade"><span>注册会员</span></div>
+			</div>
+			
+		</div>
+		<div id="uploader-demo" class="info_top">
+    		<!--用来存放item-->
+    		<div id="fileList" class="uploader-list"></div>
+    		<div id="filePicker">更换图像</div>
+			</div>
+		<form action="" method="post" id="membersave" >
+			<input type="hidden" name="face" value=""  />
+			<input type="hidden" name="id" value="<?php echo cookie('members')['id']?>">
+			<div class="base_item">
+				<span class="label_name"><span>*</span>昵称：</span>
+				<input maxlength="20" id="nikname" name="nikname" class="itxt" value="<?php echo cookie('members')['nikname']?>" type="text">
+				<div class="addr_msg">
+					<span id="error_member_truename"></span>
+				</div>
+			</div>
+			<div class="base_item">
+				<span class="label_name"><span>*</span>性别：</span>
+				<label class="s_radio">
+					<input name="sex" value="保密" <if condition="cookie('members')['sex'] eq '保密'" >checked="checked"</if>  type="radio">保密
+				</label>
+				<label class="s_radio">
+					<input name="sex" value="女" <if condition="cookie('members')['sex'] eq '女'" >checked="checked"</if> type="radio">女 
+				</label>
+				<label class="s_radio">
+				<input name="sex" value="男" <if condition="cookie('members')['sex'] eq '男'" >checked="checked"</if> type="radio">男
+				</label>
+				<div class="addr_msg"><span id="error_member_sex"></span></div>
+			</div>
+			<div class="base_item">
+
+				<span class="label_name"><span>*</span>生日：</span>
+				
+				<div class="laydate-box">
+					<input type="text" id="laydateInput" name="birthday" placeholder="xxxx年xx月xx日" value="<?php echo cookie('members')['birthday']?>" />
+					<img src="__PUBLIC__/Home/lib/jQueryCalendar/images/calendar.png" alt="" class="icon data-icon"/>
+					<div class="select-date">
+					<div class="select-date-header">
+					<ul class="heade-ul">
+						<li class="header-item header-item-one">
+							<select name="" id="yearList"></select>
+						</li>
+						<li class="header-item header-item-two" onselectstart="return false">
+							<select name="" id="monthList"></select>
+						</li>
+						<li class="header-item header-item-three" onselectstart="return false" >
+							<span class="reback">回到今天</span>
+						</li>
+					</ul>
+					</div>
+					<div class="select-date-body">
+						<ul class="week-list">
+							<li>日</li><li>一</li><li>二</li><li>三</li><li>四</li><li>五</li><li>六</li>
+						</ul>
+						<ul class="day-tabel"></ul>
+					</div>
+					</div>
+				</div>
+				<div class="addr_msg">
+					<span id="error_member_birthday"></span>
+				</div>
+			</div>
+			<div class=" base_btn">
+				<a class="base_btn_save" id="profilesubmit" href="javascript:;">保存</a>
+			</div>
+		</form>
+	</div>
+</div>
+</div>
+<script src="__PUBLIC__/Home/js/uploads.js"></script>
+<script>
+	function getSelectDate(result){
+		//这里获取选择的日期
+		console.log(result);
+	}
+
+	//保存资料
+	$('#profilesubmit').on('click',function(){
+		var data = $('#membersave').serialize();
+		
+		$.ajax({
+			type:"post",
+			url: "{:U('usersub')}",
+			data:data,
+			dataType:"json",
+			success:function(msg){
+				if(msg.status == '1'){
+					layer.msg('更新成功，重新登录生效！', {icon: 1});
+				}else{
+					layer.msg('更新失败，请稍后重试！', {icon: 2});
+				}
+			}
+		});
+	});
+</script>
