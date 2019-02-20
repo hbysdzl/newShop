@@ -1,0 +1,41 @@
+<layout name="public/layout"/>
+
+
+
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/confirm/css/style.css" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/confirm/css/shopping-mall-index.css" />
+   <!--内容开始-->
+    <div class="payment w1200">
+        <div class="payment-hd">
+            <h3 class="success">支付成功</h3>
+        </div>
+        <div class="payment-bd">
+            <volist name='goodsInfo' id='vo'>
+            <dl class="dl-hd" style="margin-bottom: 20px;" >
+                <dt><a href="#"><?php showImage($vo['logo'],100)?></a></dt>
+                <dd>
+                    <h5><a href="#">{$vo.goods_name}</a></h3>
+                    <ul>
+                        <li><span>规格:&emsp;&emsp;</span>{$vo.goods_attr_str|default="默认"}</li>
+                        <!-- <li><span>促销:&emsp;&emsp;</span><span><i>满赠</i>指定商品满1件，赠送卫欲无限 座便器配件三件套</span></li> -->
+                        <li><span>送货至:&emsp;&emsp;</span><span>{$orderInfo.province}{$orderInfo.city}（包邮）</span></li>
+                        <li><span>价格:&emsp;&emsp;</span><span><i>¥{$vo.goods_price}</i></span></li>
+                    </ul>
+                </dd>
+                <div style="clear:both;"></div>
+                
+            </dl>
+            </volist>
+            <ul class="ul-bd">
+                <li><span>收货信息</span>
+                <p>{$orderInfo.true_name}&emsp;{$orderInfo.tel_phone}&emsp;&emsp;{$orderInfo.province}{$orderInfo.city}{$orderInfo.town}{$orderInfo.address}</p></li>
+                <li><span>成交时间</span><p>{$orderInfo.addtime|date="Y-m-d H:i:s",###}</p></li>
+                <li><span>订单号</span><p><?php echo date('YmdHis').$orderInfo['id']?></p></li>
+            </ul>
+        </div>
+        <div class="payment-ft">
+            <button class="btn2"><a href="{:U('Center/orderLst')}" style="color: #fff;" >我的订单</a></button>
+        </div>
+    </div>
+
+

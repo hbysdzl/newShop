@@ -101,7 +101,7 @@ class PaymentController extends BackController{
             $trade_status = $_POST['trade_status'];
 
             dump($out_trade_no.'22');
-                die();
+            die();
             if($_POST['trade_status'] == 'TRADE_FINISHED') {
 
                 //判断该笔订单是否在商户网站中已经做过处理
@@ -177,8 +177,19 @@ class PaymentController extends BackController{
               $save['alipaid']=$trade_no;
             $order->where('id='.$out_trade_no)->save($save);
             
-            $url=U('Center/orderLst');            
-            echo "恭喜您支付成功！<br />订单号：".$out_trade_no."<br/>支付宝交易号：".$trade_no."<br/><a href='".$url."'>点击前往我的订单！</a>";
+            //取出订单信息
+            $id = $out_trade_no;
+            $orderInfo = M('order')->alias('o')->field('o.id,o.addtime,p.true_name,p.province,p.city,p.town,p.address,p.tel_phone')->join('left join php2018_orderpath as p on o.addr_id=p.id')->where('o.id='.$id)->find();
+
+            //取出订单中的商品信息
+            $goodsInfo = M('OrderGoods')->alias('t1')->field('t1.*,t2.goods_name,t2.logo')->join('left join php2018_goods as t2 on t1.goods_id=t2.goods_id')->where('order_id='.$id)->select();
+            
+            $page_title = '支付成功';
+            $this->assign('page_title',$page_title);
+            $this->assign('orderInfo',$orderInfo);
+            $this->assign('goodsInfo',$goodsInfo);
+            $this->display();
+
         }
         else {
             //验证失败
